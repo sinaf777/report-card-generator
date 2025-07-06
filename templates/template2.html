@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Report Card - {{ student.name }}</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      max-width: 750px;
+      margin: 2rem auto;
+      background: #fff;
+      color: #333;
+      padding: 2rem;
+      border: 2px solid #222;
+      border-radius: 10px;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      border-bottom: 2px solid #007ACC;
+      padding-bottom: 1rem;
+      margin-bottom: 2rem;
+    }
+    .logo {
+      max-height: 70px;
+      margin-right: 1.5rem;
+    }
+    .school-info {
+      flex-grow: 1;
+    }
+    h1 {
+      font-size: 2.2rem;
+      margin: 0;
+      color: #007ACC;
+      letter-spacing: 1.5px;
+    }
+    .term-date {
+      font-style: italic;
+      color: #555;
+      margin-top: 0.2rem;
+    }
+    section.info {
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.1rem;
+    }
+    section.info div {
+      width: 48%;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1.1rem;
+    }
+    th, td {
+      border: 1px solid #007ACC;
+      padding: 0.6rem 1rem;
+      text-align: left;
+    }
+    th {
+      background-color: #007ACC;
+      color: white;
+      text-transform: uppercase;
+    }
+    tbody tr:hover {
+      background-color: #e0f0ff;
+    }
+    .signature {
+      margin-top: 3rem;
+      text-align: right;
+      font-style: italic;
+      color: #007ACC;
+    }
+    footer {
+      text-align: center;
+      margin-top: 2.5rem;
+      font-size: 0.9rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    {% if school.logo_url %}
+      <img src="{{ school.logo_url }}" alt="School Logo" class="logo" />
+    {% endif %}
+    <div class="school-info">
+      <h1>{{ school.name }}</h1>
+      <p class="term-date">Report Card - Term: {{ school.term }} | Date: {{ school.date }}</p>
+    </div>
+  </header>
+
+  <section class="info">
+    <div><strong>Student Name:</strong> {{ student.name }}</div>
+    <div><strong>Grade / Class:</strong> {{ student.grade_class }}</div>
+  </section>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Subject</th>
+        <th>Score</th>
+        <th>Grade</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for subject in student.subjects %}
+        <tr>
+          <td>{{ subject.name }}</td>
+          <td>{{ subject.score }}</td>
+          <td>{{ subject.letter_grade }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="signature">
+    <p>{{ school.signature_text }}</p>
+    <p>__________________________</p>
+    <p>Signature</p>
+  </div>
+
+  <footer>
+    <p>Report Card Generator &copy; {{ school.date.split(' ')[-1] }}</p>
+  </footer>
+</body>
+</html>
