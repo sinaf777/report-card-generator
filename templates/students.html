@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Data</title>
+</head>
+<body>
+    <h2>Upload Excel Sheet</h2>
+    <form method="POST" action="/generate" enctype="multipart/form-data">
+        <input type="file" name="excel" accept=".xlsx,.xls" required><br><br>
+        <input type="hidden" name="school_info" value="{{ data.school_info }}">
+        <input type="hidden" name="grading_scale" value="{{ data.grading_scale }}">
+        <input type="hidden" name="template" value="{{ data.template }}">
+        <input type="hidden" name="logo" value="{{ data.logo }}">
+        <input type="submit" value="Generate Report Cards">
+    </form>
+</body>
+</html>
