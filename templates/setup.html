@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Setup Report</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Generate Report Cards</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,10 +12,10 @@
             width: 140px;
             margin-top: 10px;
         }
-        input[type="text"], input[type="date"], input[type="number"] {
+        input[type="text"], input[type="date"], input[type="file"], select {
             margin-top: 10px;
             padding: 5px;
-            width: 200px;
+            width: 300px;
         }
         .alert {
             padding: 10px;
@@ -28,7 +27,7 @@
             color: #155724;
             border: 1px solid #c3e6cb;
         }
-        .alert-error {
+        .alert-danger {
             background-color: #f8d7da;
             color: #721c24;
             border: 1px solid #f5c6cb;
@@ -36,7 +35,6 @@
     </style>
 </head>
 <body>
-    <!-- Flash Message Display -->
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         {% for category, message in messages %}
@@ -45,34 +43,21 @@
       {% endif %}
     {% endwith %}
 
-    <h2>School Information</h2>
-    <form method="POST" enctype="multipart/form-data">
+    <h2>Generate Report Cards</h2>
+    <form method="POST" action="/generate" enctype="multipart/form-data">
+        <h3>School Information</h3>
         <label>School Name:</label><input type="text" name="school_name" required><br>
-        <label>Term:</label><input type="text" name="term" required><br>
-        <label>Date:</label><input type="date" name="date" required><br>
-        <label>Signature Text:</label><input type="text" name="signature" required><br>
-        <label>School Logo:</label><input type="file" name="logo" accept="image/*"><br><br>
+        <label>Term:</label>
+        <select name="term" required>
+            <option value="1st Semester">1st Semester</option>
+            <option value="2nd Semester">2nd Semester</option>
+        </select><br>
+        <label>Date:</label><input type="date" name="date" required><br><br>
 
-        <h3>Grading Scale</h3>
-        <div id="scale">
-            <div><input name="grade[]" placeholder="A+" required> ≥ <input name="min_score[]" type="number" required></div>
-        </div>
-        <button type="button" onclick="addRow()">+ Add Grade</button><br><br>
+        <h3>Student Excel Sheet</h3>
+        <input type="file" name="excel" accept=".xlsx,.xls" required><br><br>
 
-        <h3>Select Template</h3>
-        <label><input type="radio" name="template" value="template1" checked> Template 1</label>
-        <label><input type="radio" name="template" value="template2"> Template 2</label>
-        <label><input type="radio" name="template" value="template3"> Template 3</label><br><br>
-
-        <input type="submit" value="Next">
+        <input type="submit" value="Generate Report Cards">
     </form>
-
-    <script>
-        function addRow() {
-            const div = document.createElement('div');
-            div.innerHTML = '<input name="grade[]" placeholder="A+" required> ≥ <input name="min_score[]" type="number" required>';
-            document.getElementById('scale').appendChild(div);
-        }
-    </script>
 </body>
 </html>
